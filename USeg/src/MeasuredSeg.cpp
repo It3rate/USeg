@@ -1,7 +1,7 @@
 
 #include "MeasuredSeg.h"
-using namespace UMath;
+using namespace umath;
 
-MeasuredSeg::MeasuredSeg(const Segment segment, const Segment unit, const Segment unot):m_segment(segment), m_unit(unit), m_unot(unot)
+MeasuredSeg::MeasuredSeg(const Segment segment, const Segment unit, const Segment unot):segment_(segment), unit_(unit), unot_(unot)
 {
 }

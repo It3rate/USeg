@@ -1,13 +1,13 @@
 #include "Segment.h"
-using namespace UMath;
+using namespace umath;
 
 const Segment DEFAULT_UNIT { 0.0, 1.0 };
 const Segment DEFAULT_UNOT { 0.0, -1.0 };
 
-UMath::Segment::Segment(double start, double end, Trait* trait):m_start(start), m_end(end), m_trait(trait)
+umath::Segment::Segment(const double start, const double end, const int trait_index):start_(start), end_(end), trait_index_(trait_index)
 {
 }
 
-Segment::Segment(const double end) : m_start(-end), m_end(end), m_trait(nullptr)
+Segment::Segment(const double end) : start_(-end), end_(end), trait_index_(0)
 {
 }

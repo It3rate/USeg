@@ -5,19 +5,19 @@
 #include "MeasuredSeg.h"
 #include "Segment.h"
 
-namespace UMath
+namespace umath
 {
 	class Trait
 	{
 	public:
-		inline static int id_counter = 1;
+		inline static int id_counter_ = 1;
 		
-		int trait_id;
-		std::vector<MeasuredSeg> segments;
-		std::vector<Segment> unit_list;
-		std::vector<Segment> unot_list;
+		int trait_id_;
+		std::vector<MeasuredSeg> segments_;
+		std::vector<Segment> unit_list_;
+		std::vector<Segment> unot_list_;
 		
 		Trait();
 	};
-	extern const UMath::Trait UNKNOWN_TRAIT;
+	static const unsigned int UNKNOWN_TRAIT = 0;
 }

@@ -3,7 +3,7 @@
 #include <istream>
 #include <ostream>
 
-namespace UMath
+namespace umath
 {
     template<typename T = double>
 	class Number

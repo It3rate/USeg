@@ -1,16 +1,16 @@
 #pragma once
 #include "Segment.h"
 
-namespace UMath
+namespace umath
 {
 	class MeasuredSeg
 	{
 	public:
-		Segment m_segment;
-		Segment m_unit;
-		Segment m_unot;
+		Segment segment_;
+		Segment unit_;
+		Segment unot_;
 
-		explicit MeasuredSeg(Segment segment, Segment unit = DEFAULT_UNIT, Segment unot = DEFAULT_UNOT);
+		explicit MeasuredSeg(Segment segment, Segment unit = kDefaultUnit, Segment unot = kDefaultUnot);
 	};
 }
 

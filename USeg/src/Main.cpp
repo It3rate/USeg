@@ -4,13 +4,13 @@
 
 #include "Segment.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char* argv[]) 
 {
 	std::cout << "hello\n";
 
-	const UMath::Segment seg0(10.3,20.0);
-	std::cout << "start = " << seg0.m_start << "\n";
-	std::cout << "end = " << seg0.m_end << "\n";
+	const umath::Segment seg0(10.3,20.0);
+	std::cout << "start = " << seg0.start_ << "\n";
+	std::cout << "end = " << seg0.end_ << "\n";
 
     return 0;
 }

@@ -3,19 +3,19 @@
 
 class Trait;
 
-namespace UMath
+namespace umath
 {
 	class Segment
 	{
 	public:
-		Number<double> m_start;
-		Number<double> m_end;
-		Trait *m_trait;
+		Number<double> start_;
+		Number<double> end_;
+		int trait_index_;
 
-		Segment(double start, double end , Trait* trait = nullptr);
+		Segment(double start, double end , int trait_index = 0);
 		explicit Segment(double end);
 	};
-	extern const UMath::Segment DEFAULT_UNIT;
-	extern const UMath::Segment DEFAULT_UNOT;
+	extern const umath::Segment kDefaultUnit;
+	extern const umath::Segment kDefaultUnot;
 }
 
