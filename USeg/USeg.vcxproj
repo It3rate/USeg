@@ -118,6 +118,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,7 +146,6 @@
     <ClInclude Include="Library.h" />
     <ClInclude Include="src\MeasuredSeg.h" />
     <ClInclude Include="src\Segment.h" />
-    <ClInclude Include="src\Number.h" />
     <ClInclude Include="src\Trait.h" />
   </ItemGroup>
   <ItemGroup>

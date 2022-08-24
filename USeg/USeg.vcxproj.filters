@@ -18,9 +18,6 @@
     <ClInclude Include="src\Segment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Number.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\MeasuredSeg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
