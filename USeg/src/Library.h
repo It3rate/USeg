@@ -3,7 +3,9 @@
 #include <memory>
 #include <complex>
 
-#include "src/Segment.h"
+#include "Segment.h"
+#include "Trait.h"
+
 
 namespace umath
 {

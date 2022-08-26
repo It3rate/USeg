@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 
+#include "Library.h"
 #include "Segment.h"
 
 int main(int argc, char* argv[]) 

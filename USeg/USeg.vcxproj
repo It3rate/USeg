@@ -143,13 +143,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Library.h" />
+    <ClInclude Include="src\Focal.h" />
+    <ClInclude Include="src\Globals.h" />
+    <ClInclude Include="src\Library.h" />
     <ClInclude Include="src\MeasuredSeg.h" />
     <ClInclude Include="src\Segment.h" />
     <ClInclude Include="src\Trait.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Library.cpp" />
+    <ClCompile Include="src\Focal.cpp" />
+    <ClCompile Include="src\Library.cpp" />
     <ClCompile Include="src\MeasuredSeg.cpp" />
     <ClCompile Include="src\Segment.cpp" />
     <ClCompile Include="src\Main.cpp" />

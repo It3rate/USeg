@@ -1,5 +1,6 @@
 #pragma once
-#include "Number.h"
+#include <ostream>
+#include <istream>
 
 class Trait;
 
