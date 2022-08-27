@@ -1,3 +1,3 @@
 #pragma once
 
-using ULL = unsigned long long;
+using LL = long long; 

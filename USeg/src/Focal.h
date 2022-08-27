@@ -3,19 +3,20 @@
 #include<memory>
 #include "Globals.h"
 
-class Trait;
-
 namespace umath
 {
+	class Trait;
+
 	class Focal
 	{
 	private:
-		ULL start_;
-		ULL end_;
-		std::shared_ptr<Trait> trait_;
+		LL start_;
+		LL end_;
 	public:
-
-		Focal(ULL start, ULL end, std::shared_ptr<Trait> trait);
+		std::shared_ptr<Trait> trait_;
+		
+		Focal(const LL start, const LL end, std::shared_ptr<Trait> trait);
+		Focal(const LL start, const LL end);
 	};
 
 }
