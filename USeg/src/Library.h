@@ -11,10 +11,23 @@ namespace umath
 {
 	class Library
 	{
-	public:
-		int AddSegment(double unit, double unot, int trait_index = 0);
 	private:
-		std::vector<std::unique_ptr<Segment>> segments_;
+		std::vector<std::unique_ptr<Segment>> segments_{};
+		std::vector<std::shared_ptr<Trait>> traits_{};
+		
+		Library() = default;
+		~Library() = default;
+	public:
+		//Library(Library const&) = delete;
+		//void operator=(Library const&) = delete;
+		
+		static Library& GetInstance() {
+			static Library instance;
+			return instance;
+		}
+		
+		int AddSegment(double unit, double unot, int trait_index = 0);
+		std::shared_ptr<umath::Trait> AddTrait(const LL ticks_per_unit, const LL min, const LL max);
 	};
 }
 

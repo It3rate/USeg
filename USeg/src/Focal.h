@@ -10,9 +10,9 @@ namespace umath
 	class Focal
 	{
 	private:
+	public:
 		LL start_;
 		LL end_;
-	public:
 		std::shared_ptr<Trait> trait_;
 		
 		Focal(const LL start, const LL end, std::shared_ptr<Trait> trait);
