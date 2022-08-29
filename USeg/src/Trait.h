@@ -13,6 +13,7 @@ namespace umath
 	class Trait : public std::enable_shared_from_this<Trait>
 	{
 	private:
+		static int const focalCounter = 1;
 		std::vector<std::unique_ptr<Focal>> focals_{};
 		
 		// unot always points positive left on a trait line. Unot one will be less than unot zero for a positive unot.
@@ -57,8 +58,7 @@ namespace umath
 		void Scale(Focal* focal, double scale) const;
 		void ScaleStart(Focal* focal, double scale) const;
 		void ScaleEnd(Focal* focal, double scale) const;
-		//void SwapValues(Focal* focal);
-		//void SwapUnits(Focal* focal); 
+		void SwapValues(Focal* focal) const;
 		
 		//Focal* FocalAt(int index)[]
 		Focal* AddFocalByValue(const double imag_start, const double real_end);

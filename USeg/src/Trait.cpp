@@ -48,3 +48,10 @@ void umath::Trait::Scale(Focal* focal, double scale) const{ ScaleStart(focal, sc
 void umath::Trait::ScaleStart(Focal* focal, double scale) const { focal->start_ = DecimalToUnotTicks(UnotTicksToDecimal(focal->start_) * scale); }
 void umath::Trait::ScaleEnd(Focal* focal, double scale) const { focal->end_ = DecimalToUnotTicks(UnotTicksToDecimal(focal->end_) * scale); }
 
+void umath::Trait::SwapValues(Focal* focal) const
+{
+	auto temp = focal->start_;
+	focal->start_ = focal->end_;
+	focal->end_ = temp;
+}
+
