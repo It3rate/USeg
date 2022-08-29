@@ -64,12 +64,12 @@ const int kHeight = 640;
 int main(void) {
     umath::Library& lib = umath::Library::GetInstance();
     auto* trait = lib.AddTrait(10, -180, 700);
-    auto* focal = trait->AddFocal(-20, 50);
+    auto* focal = trait->AddFocalByValue(-20, 50);
     std::cout << focal->start_ << "\n";
     std::cout << focal->end_ << "\n";
-    std::cout << focal->GetComplex() << "\n";
-    std::cout << focal->GetUnotStart() << "\n";
-    std::cout << focal->GetUnitEnd() << "\n";
+    std::cout << focal->Value() << "\n";
+    std::cout << focal->StartValue() << "\n";
+    std::cout << focal->EndValue() << "\n";
 
     glfwSetErrorCallback(ErrorCallback);
     if (!glfwInit()) {
