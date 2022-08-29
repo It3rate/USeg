@@ -16,10 +16,8 @@
 #include "skia/core/SkColorSpace.h"
 #include "skia/core/SkSurface.h"
 
-#define GL_FRAMEBUFFER_SRGB 0x8DB9
-#define GL_SRGB8_ALPHA8 0x8C43
-
-
+//#define GL_FRAMEBUFFER_SRGB 0x8DB9
+//#define GL_SRGB8_ALPHA8 0x8C43
 
 GrDirectContext* context_ = nullptr;
 SkSurface* surface_ = nullptr;
@@ -40,7 +38,7 @@ void InitSkia(const int width, const int height) {
     GrGLFramebufferInfo framebufferInfo;
     framebufferInfo.fFBOID = 0; // assume default framebuffer
     // We are always using OpenGL and we use RGBA8 internal format for both RGBA and BGRA configs in OpenGL.
-    //(replace line below with this one to enable correct color spaces) framebufferInfo.fFormat = GL_SRGB8_ALPHA8;
+	//framebufferInfo.fFormat = GL_SRGB8_ALPHA8;
     framebufferInfo.fFormat = GL_RGBA8;
 
 	const SkColorType color_type = kRGBA_8888_SkColorType;
@@ -48,8 +46,9 @@ void InitSkia(const int width, const int height) {
 	                                                  0, // sample count
 	                                                  0, // stencil bits
 	                                                  framebufferInfo);
-
-    //(replace line below with this one to enable correct color spaces) surface_ = SkSurface::MakeFromBackendRenderTarget(context_, backendRenderTarget, kBottomLeft_GrSurfaceOrigin, colorType, SkColorSpace::MakeSRGB(), nullptr).release();
+     
+    //(replace line below with this one to enable correct color spaces)
+	//surface_ = SkSurface::MakeFromBackendRenderTarget(context_, backendRenderTarget, kBottomLeft_GrSurfaceOrigin, colorType, SkColorSpace::MakeSRGB(), nullptr).release();
     surface_ = SkSurface::MakeFromBackendRenderTarget(context_, backend_render_target, kBottomLeft_GrSurfaceOrigin, color_type, nullptr, nullptr).release();
     if (surface_ == nullptr) abort();
 }
@@ -61,17 +60,16 @@ void CleanupSkia() {
 
 const int kWidth = 960;
 const int kHeight = 640;
-
+ 
 int main(void) {
     umath::Library& lib = umath::Library::GetInstance();
-    auto trait = lib.AddTrait(1000, -200, 200);
-    auto* focal = trait->AddFocal(20, 50);
+    auto* trait = lib.AddTrait(10, -180, 700);
+    auto* focal = trait->AddFocal(-20, 50);
     std::cout << focal->start_ << "\n";
-
-    const umath::Segment seg0(10.3, 20.0);
-    std::cout << "start = " << seg0.i_start_ << "\n";
-    std::cout << "end = " << seg0.r_end_ << "\n";
-
+    std::cout << focal->end_ << "\n";
+    std::cout << focal->GetComplex() << "\n";
+    std::cout << focal->GetUnotStart() << "\n";
+    std::cout << focal->GetUnitEnd() << "\n";
 
     glfwSetErrorCallback(ErrorCallback);
     if (!glfwInit()) {
@@ -82,10 +80,9 @@ int main(void) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	glfwWindowHint(GLFW_SRGB_CAPABLE, GL_TRUE);
+    //glfwWindowHint(GLFW_SRGB_CAPABLE, GL_TRUE);
     glfwWindowHint(GLFW_STENCIL_BITS, 0);
-    glfwWindowHint(GLFW_ALPHA_BITS, 0);
+    //glfwWindowHint(GLFW_ALPHA_BITS, 0);
     glfwWindowHint(GLFW_DEPTH_BITS, 0);
 
     GLFWwindow* window = glfwCreateWindow(kWidth, kHeight, "Simple example", nullptr, nullptr);
@@ -94,7 +91,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
-	glEnable(GL_FRAMEBUFFER_SRGB);
+	//glEnable(GL_FRAMEBUFFER_SRGB);
 
     InitSkia(kWidth, kHeight);
 
@@ -109,6 +106,8 @@ int main(void) {
         paint.setColor(SK_ColorWHITE);
         canvas->drawPaint(paint);
         paint.setColor(SK_ColorBLUE);
+        canvas->drawLine(focal->start_, 100, focal->end_, 100, paint);
+        paint.setColor(SK_ColorYELLOW);
         canvas->drawRect({ 100, 200, 300, 500 }, paint);
         context_->flush();
 

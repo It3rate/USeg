@@ -27,7 +27,7 @@ namespace umath
 		}
 		
 		int AddSegment(double unit, double unot, int trait_index = 0);
-		std::shared_ptr<umath::Trait> AddTrait(const LL ticks_per_unit, const LL min, const LL max);
+		Trait* AddTrait(const LL ticks_per_unit, const LL min, const LL max);
 	};
 }
 

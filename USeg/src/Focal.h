@@ -1,5 +1,6 @@
 #pragma once
 
+#include <complex>
 #include<memory>
 #include "Globals.h"
 
@@ -13,10 +14,13 @@ namespace umath
 	public:
 		LL start_;
 		LL end_;
-		std::shared_ptr<Trait> trait_;
+		Trait& trait_;
 		
-		Focal(const LL start, const LL end, std::shared_ptr<Trait> trait);
-		Focal(const LL start, const LL end);
+		Focal(const LL start, const LL end, Trait& trait);
+
+		double GetUnotStart() const;
+		double GetUnitEnd() const;
+		std::complex<double> GetComplex();
 	};
 
 }

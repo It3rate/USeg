@@ -6,8 +6,8 @@ int umath::Library::AddSegment(double unit, double unot, int trait_index)
 	return segments_.size();
 }
 
-std::shared_ptr<umath::Trait> umath::Library::AddTrait(const LL ticks_per_unit, const LL min, const LL max)
+umath::Trait* umath::Library::AddTrait(const LL ticks_per_unit, const LL min, const LL max)
 {
-	traits_.push_back(std::make_shared<Trait>(ticks_per_unit, min, max));
-	return traits_.back();
+	traits_.emplace_back(std::make_unique<Trait>(ticks_per_unit, min, max));
+	return traits_.back().get();
 }
