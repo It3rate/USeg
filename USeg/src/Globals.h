@@ -1,3 +1,3 @@
 #pragma once
 
-using LL = long long; 
+using LL = long long int; 

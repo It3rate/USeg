@@ -48,6 +48,7 @@ namespace umath
 		explicit Trait(const LL ticks_per_unit, const LL min, const LL max);
 
 		//void Value(const Focal* focal);
+		void SetValue(Focal* focal, const std::complex<double> value) const;
 		std::complex<double> Value(const Focal* focal) const;
 		inline double StartValue(const Focal* focal) const { return UnotTicksToDecimal(focal->start_); }
 		inline double EndValue(const Focal* focal) const { return UnitTicksToDecimal(focal->end_); }
@@ -58,6 +59,7 @@ namespace umath
 		void Scale(Focal* focal, double scale) const;
 		void ScaleStart(Focal* focal, double scale) const;
 		void ScaleEnd(Focal* focal, double scale) const;
+
 		void SwapValues(Focal* focal) const;
 		
 		//Focal* FocalAt(int index)[]

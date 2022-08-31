@@ -60,17 +60,10 @@ void CleanupSkia() {
 
 const int kWidth = 960;
 const int kHeight = 640;
- 
-int main(void) {
-    umath::Library& lib = umath::Library::GetInstance();
-    auto* trait = lib.AddTrait(10, -180, 700);
-    auto* focal = trait->AddFocalByValue(-20, 50);
-    std::cout << focal->start_ << "\n";
-    std::cout << focal->end_ << "\n";
-    std::cout << focal->Value() << "\n";
-    std::cout << focal->StartValue() << "\n";
-    std::cout << focal->EndValue() << "\n";
-
+GLFWwindow* window;
+SkCanvas* canvas;
+void setupSkia()
+{
     glfwSetErrorCallback(ErrorCallback);
     if (!glfwInit()) {
         exit(EXIT_FAILURE);
@@ -85,30 +78,49 @@ int main(void) {
     //glfwWindowHint(GLFW_ALPHA_BITS, 0);
     glfwWindowHint(GLFW_DEPTH_BITS, 0);
 
-    GLFWwindow* window = glfwCreateWindow(kWidth, kHeight, "Simple example", nullptr, nullptr);
+    window = glfwCreateWindow(kWidth, kHeight, "Simple example", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
-	//glEnable(GL_FRAMEBUFFER_SRGB);
+    //glEnable(GL_FRAMEBUFFER_SRGB);
 
     InitSkia(kWidth, kHeight);
 
     glfwSwapInterval(1);
     glfwSetKeyCallback(window, KeyCallback);
 
-    SkCanvas* canvas = surface_->getCanvas();
+    canvas = surface_->getCanvas();
+}
+void drawFocal(SkColor color, umath::Focal *focal, int yoffset = 100)
+{
+    static SkPaint paint;
+    paint.setStrokeWidth(4);
+    paint.setColor(color);
+    canvas->drawLine(static_cast<float>(focal->start_), yoffset, static_cast<float>(focal->end_), yoffset, paint);
+}
+
+int main(void) {
+    umath::Library& lib = umath::Library::GetInstance();
+
+    auto* trait = lib.AddTrait(10LL, -180LL, 700LL);
+    auto* f0 = trait->AddFocalByValue(-20LL, 50LL);
+    auto* f1 = trait->AddFocalByValue(-60LL, 70LL);
+    std::cout << f0 << "  " << f1 << "\n";
+	
+    f0->Add(f1);
+    std::cout << f0 << "\n";
+	
+    setupSkia();
 
     while (!glfwWindowShouldClose(window)) {
         glfwWaitEvents();
         SkPaint paint;
         paint.setColor(SK_ColorWHITE);
         canvas->drawPaint(paint);
-        paint.setColor(SK_ColorBLUE);
-        canvas->drawLine(focal->start_, 100, focal->end_, 100, paint);
-        paint.setColor(SK_ColorYELLOW);
-        canvas->drawRect({ 100, 200, 300, 500 }, paint);
+        drawFocal(SK_ColorBLUE, f0, 100);
+        drawFocal(SK_ColorGREEN, f1, 110);
         context_->flush();
 
         glfwSwapBuffers(window);

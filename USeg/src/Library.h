@@ -12,14 +12,13 @@ namespace umath
 	class Library
 	{
 	private:
-		std::vector<std::unique_ptr<Segment>> segments_{};
 		std::vector<std::shared_ptr<Trait>> traits_{};
 		
 		Library() = default;
 		~Library() = default;
 	public:
-		//Library(Library const&) = delete;
-		//void operator=(Library const&) = delete;
+		Library(const Library&) = delete;
+		Library(Library&&) = delete; 
 		
 		static Library& GetInstance() {
 			static Library instance;
