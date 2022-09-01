@@ -2,8 +2,7 @@
 #include <vector>
 #include <memory>
 #include <complex>
-
-#include "Segment.h"
+#include <unordered_map>
 #include "Trait.h"
 
 
@@ -12,7 +11,8 @@ namespace umath
 	class Library
 	{
 	private:
-		std::vector<std::shared_ptr<Trait>> traits_{};
+		inline static int traitCounter_ = 1;
+		std::unordered_map<int, std::unique_ptr<Trait>> traitMap_;
 		
 		Library() = default;
 		~Library() = default;
@@ -25,8 +25,7 @@ namespace umath
 			return instance;
 		}
 		
-		int AddSegment(double unit, double unot, int trait_index = 0);
-		Trait* AddTrait(const LL ticks_per_unit, const LL min, const LL max);
+		Trait* AddTrait(const LL ticks_per_unit, const LL positive_extent);
 	};
 }
 

@@ -2,9 +2,10 @@
 
 namespace umath
 {
-	Trait* Library::AddTrait(const LL ticks_per_unit, const LL min, const LL max)
+	Trait* Library::AddTrait(const LL ticks_per_unit, const LL positive_extent)
 	{
-		traits_.emplace_back(std::make_unique<Trait>(ticks_per_unit, min, max));
-		return traits_.back().get();
+		int id = traitCounter_++;
+		traitMap_.try_emplace(id, std::make_unique<Trait>(ticks_per_unit, positive_extent));
+		return traitMap_.at(id).get();
 	}
 }

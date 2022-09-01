@@ -3,23 +3,43 @@
 
 namespace umath
 {
-	Trait::Trait(const LL unot_zero, const LL unot_one, const LL unot_max, const LL unit_zero, const LL unit_one, const LL unit_max) :
-		unot_(AddFocal(unot_zero, unot_one)), unot_max_(unot_max),
-		unit_(AddFocal(unit_zero, unit_one)), unit_max_(unit_max)
+
+	Trait::Trait(Range& unot, Range& unit, Range& unotRange, Range& unitRange):
+		unot_(AddFocal(unot)), unit_(AddFocal(unit)),
+		unot_range_(AddFocal(unotRange)), unit_range_(AddFocal(unitRange))
 	{
+		ValidateTrait();
 	}
 
-	Trait::Trait(const LL ticks_per_unit, const LL min, const LL max) :
-		unot_(AddFocal(0, -ticks_per_unit)), unot_max_(-ticks_per_unit * min),
-		unit_(AddFocal(0, ticks_per_unit)), unit_max_(ticks_per_unit* max)
+	Trait::Trait(const LL ticks_per_unit, const LL positive_extent) :
+		unot_(AddFocal(0, -ticks_per_unit)), unot_range_(AddFocal( positive_extent, -positive_extent)),
+		unit_(AddFocal(0, ticks_per_unit)), unit_range_(AddFocal(-positive_extent, positive_extent))
 	{
+		ValidateTrait();
+	}
+
+	void Trait::ValidateTrait()
+	{
+		assert(("Unot can not point right: ",unot_->Direction() != Pointing::RIGHT));
+		assert(("Unot range can not point right: ", unot_range_->Direction() != Pointing::RIGHT));
+		assert(("Unit can not point left: ", unit_->Direction() != Pointing::LEFT));
+		assert(("Unit range can not point left: ", unit_range_->Direction() != Pointing::LEFT));
+	}
+
+	Focal* Trait::AddFocal(Range& range)
+	{
+		int id = focalCounter_++;
+		focalMap_.try_emplace(id, std::make_unique<Focal>(range.start_, range.end_, *this));
+		return focalMap_.at(id).get();
 	}
 
 	Focal* Trait::AddFocal(LL start, LL end)
 	{
-		focals_.emplace_back(std::make_unique<Focal>(start, end, *this));
-		return focals_.back().get();
+		int id = focalCounter_++;
+		focalMap_.try_emplace(id, std::make_unique<Focal> (start, end, *this));
+		return focalMap_.at(id).get();
 	}
+	
 	Focal* Trait::AddFocalByValue(const double imag_start, const double real_end)
 	{
 		auto start = DecimalToUnotTicks(imag_start);
@@ -44,6 +64,7 @@ namespace umath
 	{
 		return std::complex<double>{UnitTicksToDecimal(focal->end_), UnotTicksToDecimal(focal->start_)};
 	}
+	std::complex<double> Trait::Reciprocal(const Focal* focal) const { return 1.0 / Value(focal); }
 
 	void Trait::Move(Focal* focal, const double distance) const { MoveStart(focal, distance); MoveEnd(focal, distance); }
 	void Trait::MoveStart(Focal* focal, const double distance) const { focal->start_ = DecimalToUnotTicks(UnotTicksToDecimal(focal->start_) + distance); }

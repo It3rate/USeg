@@ -4,7 +4,6 @@
 #include "skia/core/SkCanvas.h"
 
 #include "Library.h"
-#include "Segment.h"
 
 
 #include "GLFW/glfw3.h"
@@ -32,8 +31,8 @@ void KeyCallback(GLFWwindow* window, const int key, int scancode, int action, in
 }
 
 void InitSkia(const int width, const int height) {
-	const auto interface = GrGLMakeNativeInterface();
-    context_ = GrDirectContext::MakeGL(interface).release();
+	const auto _interface = GrGLMakeNativeInterface();
+    context_ = GrDirectContext::MakeGL(_interface).release();
 
     GrGLFramebufferInfo framebufferInfo;
     framebufferInfo.fFBOID = 0; // assume default framebuffer
@@ -104,7 +103,7 @@ void drawFocal(SkColor color, umath::Focal *focal, int yoffset = 100)
 int main(void) {
     umath::Library& lib = umath::Library::GetInstance();
 
-    auto* trait = lib.AddTrait(10LL, -180LL, 700LL);
+    auto* trait = lib.AddTrait(10LL, 700LL);
     auto* f0 = trait->AddFocalByValue(-20LL, 50LL);
     auto* f1 = trait->AddFocalByValue(-60LL, 70LL);
     std::cout << f0 << "  " << f1 << "\n";
