@@ -14,17 +14,21 @@ namespace umath
 	class Focal : public Range
 	{
 	private:
+		std::complex<double> Reciprocal() const;
 	public:
+		bool start_overflowed_;
+		bool end_overflowed_;
 		Trait& trait_;
 		
 		Focal(const LL start, const LL end, Trait& trait);
 
+		void ClampToTrait();
+		
 		void SetValue(const std::complex<double> value);
 		std::complex<double> Value() const;
 		double StartValue() const;
 		double EndValue() const;
 		void SwapValues();
-		std::complex<double> Reciprocal() const;
 
 		//void SwapValues(const Focal* focal, double distance);
 		void Move(const double distance);

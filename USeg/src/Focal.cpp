@@ -7,46 +7,60 @@ namespace umath
 	Focal::Focal(const LL start, const LL end, Trait& trait) : Range(start, end), trait_(trait)
 	{
 	}
-	 
-	void Focal::SetValue(const std::complex<double> value){ trait_.SetValue(this, value); }
+
+	std::complex<double> Focal::Reciprocal() const { return trait_.Reciprocal(this);} // probably should be clamped value, or just deal in focals
+	
+	void Focal::ClampToTrait()
+	{
+		const auto start = start_;
+		const auto end = end_;
+		start_ = trait_.unot_range_->Clamp(start);
+		end_ = trait_.unit_range_->Clamp(end);
+		if (start != start_) { start_overflowed_ = true; }
+		if (end != end_) { end_overflowed_ = true; }
+	}
+
+	void Focal::SetValue(const std::complex<double> value){ trait_.SetValue(this, value); ClampToTrait();}
 	std::complex<double> Focal::Value() const { return trait_.Value(this); }
 	double Focal::StartValue() const { return trait_.StartValue(this); }
 	double Focal::EndValue() const { return trait_.EndValue(this); }
-	void Focal::SwapValues(){ return trait_.SwapValues(this); }
+	
+	void Focal::SwapValues(){ return trait_.SwapValues(this);} // clamped by trait
 
-	std::complex<double> Focal::Reciprocal() const { return trait_.Reciprocal(this);  }
+	void Focal::Move(const double distance) { trait_.Move(this, distance); ClampToTrait();}
+	void Focal::MoveStart(const double distance) { trait_.MoveStart(this, distance); ClampToTrait();}
+	void Focal::MoveEnd(const double distance) { trait_.MoveEnd(this, distance); ClampToTrait();}
 
-	void Focal::Move(const double distance) { trait_.Move(this, distance); }
-	void Focal::MoveStart(const double distance) { trait_.MoveStart(this, distance); }
-	void Focal::MoveEnd(const double distance) { trait_.MoveEnd(this, distance); }
-
-	void Focal::Scale(const double scale) { trait_.Scale(this, scale); }
-	void Focal::ScaleStart(const double scale) { trait_.ScaleStart(this, scale); }
-	void Focal::ScaleEnd(const double scale) { trait_.ScaleEnd(this, scale); }
+	void Focal::Scale(const double scale) { trait_.Scale(this, scale); ClampToTrait();}
+	void Focal::ScaleStart(const double scale) { trait_.ScaleStart(this, scale); ClampToTrait();}
+	void Focal::ScaleEnd(const double scale) { trait_.ScaleEnd(this, scale); ClampToTrait();}
 
 	// needs to work with non zero oriented Focals, so manually.
-	void Focal::Add(const Focal* other){ SetValue(Value() + other->Value()); }
-	void Focal::Sub(const Focal* other) { SetValue(Value() - other->Value()); }
-	void Focal::Mul(const Focal* other) { SetValue(Value() * other->Value()); }
-	void Focal::Div(const Focal* other) { SetValue(Value() / other->Value()); }
+	void Focal::Add(const Focal* other){ SetValue(Value() + other->Value()); ClampToTrait();}
+	void Focal::Sub(const Focal* other) { SetValue(Value() - other->Value()); ClampToTrait();}
+	void Focal::Mul(const Focal* other) { SetValue(Value() * other->Value()); ClampToTrait();}
+	void Focal::Div(const Focal* other) { SetValue(Value() / other->Value()); ClampToTrait();}
 
-	void Focal::Add(const std::complex<double> other) { SetValue(Value() + proj(other)); }
-	void Focal::Sub(const std::complex<double> other) { SetValue(Value() - other); }
-	void Focal::Mul(const std::complex<double> other) { SetValue(Value() * other); }
-	void Focal::Div(const std::complex<double> other) { SetValue(Value() / other); }
+	void Focal::Add(const std::complex<double> other) { SetValue(Value() + other); ClampToTrait();}
+	void Focal::Sub(const std::complex<double> other) { SetValue(Value() - other); ClampToTrait();}
+	void Focal::Mul(const std::complex<double> other) { SetValue(Value() * other); ClampToTrait();}
+	void Focal::Div(const std::complex<double> other) { SetValue(Value() / other); ClampToTrait(); }
 
 	void Focal::AddByTicks(const Focal* other) {
 		end_ = end_ + other->end_;
 		start_ = start_ + other->start_;
+		ClampToTrait();
 	}
 	void Focal::SubByTicks(const Focal* other) {
 		end_ = end_ - other->end_;
 		start_ = start_ - other->start_;
+		ClampToTrait();
 	}
 	void Focal::MulByTicks(const Focal* other) {
-		double _tmp = end_ * other->end_ - start_ * other->start_;
+		double tmp = end_ * other->end_ - start_ * other->start_;
 		start_ = end_ * other->start_ + start_ * other->end_;
-		end_ = _tmp;
+		end_ = tmp;
+		ClampToTrait();
 	}
 	void Focal::DivByTicks(const Focal* other) {
 		double other_r = other->end_;
@@ -83,8 +97,7 @@ namespace umath
 				end_ = _tmp;
 			}
 		}
-		// clamp to max ticks
-		//start_ = min(start_, trait_.unot_max_);
+		ClampToTrait();
 	}
 
 }

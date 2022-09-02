@@ -25,9 +25,9 @@ namespace umath
 		Focal *unit_;
 		Focal* unit_range_;
 
-		Focal* AddFocal(LL start, LL end);
 		Focal* AddFocal(Range& range);
-		void ValidateTrait();
+		Focal* AddFocal(LL start, LL end);
+		void ValidateTrait() const;
 		
 		inline LL UnotZeroTicks() const { return unot_->start_; }
 		inline LL UnotOneTicks() const { return unot_->end_; }
@@ -37,8 +37,6 @@ namespace umath
 		inline LL TicksPerUnit() const { return UnitOneTicks() - UnitZeroTicks(); }
 		inline LL TicksPerUnot() const { return UnotOneTicks() - UnotZeroTicks(); }
 		inline LL ZeroDiffTicks() const { return UnitZeroTicks() + UnotZeroTicks(); }
-		//inline LL ClampUnot(LL ticks) const { }
-		
 		
 		inline LL DecimalToUnotTicks(const double decimal) const { return UnotZeroTicks() + ScaleTicks(TicksPerUnot(), decimal); }
 		inline LL DecimalToUnitTicks(const double decimal) const { return UnitZeroTicks() + ScaleTicks(TicksPerUnit(), decimal); }
@@ -73,10 +71,10 @@ namespace umath
 		void ScaleStart(Focal* focal, double scale) const;
 		void ScaleEnd(Focal* focal, double scale) const;
 
-		void SwapValues(Focal* focal) const;
+		static void SwapValues(Focal* focal);
 		
 		//Focal* FocalAt(int index)[]
-		Focal* AddFocalByValue(const double imag_start, const double real_end);
+		Focal* AddFocalByValue(const double i_start, const double r_end);
 		Focal* AddFocalByValue(const std::complex<double> complex);
 
 		static inline LL ScaleTicks(const LL ticks, const double scale) { return static_cast<LL>(scale * static_cast<double>(ticks)); }

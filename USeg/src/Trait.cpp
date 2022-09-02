@@ -18,67 +18,93 @@ namespace umath
 		ValidateTrait();
 	}
 
-	void Trait::ValidateTrait()
+	void Trait::ValidateTrait() const
 	{
-		assert(("Unot can not point right: ",unot_->Direction() != Pointing::RIGHT));
-		assert(("Unot range can not point right: ", unot_range_->Direction() != Pointing::RIGHT));
-		assert(("Unit can not point left: ", unit_->Direction() != Pointing::LEFT));
-		assert(("Unit range can not point left: ", unit_range_->Direction() != Pointing::LEFT));
-	}
-
-	Focal* Trait::AddFocal(Range& range)
-	{
-		int id = focalCounter_++;
-		focalMap_.try_emplace(id, std::make_unique<Focal>(range.start_, range.end_, *this));
-		return focalMap_.at(id).get();
+		assert(("Unot must not point right: ", unot_->Direction() != Pointing::RIGHT));
+		assert(("Unot range must not point right: ", unot_range_->Direction() != Pointing::RIGHT));
+		assert(("Unit must not point left: ", unit_->Direction() != Pointing::LEFT));
+		assert(("Unit range must not point left: ", unit_range_->Direction() != Pointing::LEFT));
 	}
 
 	Focal* Trait::AddFocal(LL start, LL end)
 	{
-		int id = focalCounter_++;
+		const int id = focalCounter_++;
 		focalMap_.try_emplace(id, std::make_unique<Focal> (start, end, *this));
-		return focalMap_.at(id).get();
+		auto* const result = focalMap_.at(id).get();
+		result->ClampToTrait();
+		return result;
+	}
+
+	Focal* Trait::AddFocal(Range& range)
+	{
+		return AddFocal(range.start_, range.end_);
 	}
 	
-	Focal* Trait::AddFocalByValue(const double imag_start, const double real_end)
+	Focal* Trait::AddFocalByValue(const double i_start, const double r_end)
 	{
-		auto start = DecimalToUnotTicks(imag_start);
-		auto end = DecimalToUnitTicks(real_end);
+		const auto start = DecimalToUnotTicks(i_start);
+		const auto end = DecimalToUnitTicks(r_end);
 		return AddFocal(start, end);
 	}
 
 	Focal* Trait::AddFocalByValue(const std::complex<double> complex)
 	{
-		auto start = DecimalToUnotTicks(complex.imag());
-		auto end = DecimalToUnitTicks(complex.real());
+		const auto start = DecimalToUnotTicks(complex.imag());
+		const auto end = DecimalToUnitTicks(complex.real());
 		return AddFocal(start, end);
 	}
 
+	std::complex<double> Trait::Reciprocal(const Focal* focal) const { return 1.0 / Value(focal); }
 
-	void Trait::SetValue(Focal* focal, const std::complex<double> value) const
-	{
-		focal->start_ = DecimalToUnotTicks(value.imag());
-		focal->end_ = DecimalToUnitTicks(value.real());
-	}
 	std::complex<double> Trait::Value(const Focal* focal) const
 	{
 		return std::complex<double>{UnitTicksToDecimal(focal->end_), UnotTicksToDecimal(focal->start_)};
 	}
-	std::complex<double> Trait::Reciprocal(const Focal* focal) const { return 1.0 / Value(focal); }
-
-	void Trait::Move(Focal* focal, const double distance) const { MoveStart(focal, distance); MoveEnd(focal, distance); }
-	void Trait::MoveStart(Focal* focal, const double distance) const { focal->start_ = DecimalToUnotTicks(UnotTicksToDecimal(focal->start_) + distance); }
-	void Trait::MoveEnd(Focal* focal, const double distance) const { focal->end_ = DecimalToUnitTicks(UnitTicksToDecimal(focal->end_) + distance); }
-
-	void Trait::Scale(Focal* focal, double scale) const { ScaleStart(focal, scale); ScaleEnd(focal, scale); }
-	void Trait::ScaleStart(Focal* focal, double scale) const { focal->start_ = DecimalToUnotTicks(UnotTicksToDecimal(focal->start_) * scale); }
-	void Trait::ScaleEnd(Focal* focal, double scale) const { focal->end_ = DecimalToUnitTicks(UnitTicksToDecimal(focal->end_) * scale); }
-
-
-	void Trait::SwapValues(Focal* focal) const
+	void Trait::SetValue(Focal* focal, const std::complex<double> value) const
 	{
-		auto temp = focal->start_;
+		focal->start_ = DecimalToUnotTicks(value.imag());
+		focal->end_ = DecimalToUnitTicks(value.real());
+		focal->ClampToTrait();
+	}
+
+	void Trait::Move(Focal* focal, const double distance) const
+	{
+		MoveStart(focal, distance);
+		MoveEnd(focal, distance);
+		focal->ClampToTrait();
+	}
+	void Trait::MoveStart(Focal* focal, const double distance) const
+	{
+		focal->start_ = DecimalToUnotTicks(UnotTicksToDecimal(focal->start_) + distance);
+		focal->ClampToTrait();
+	}
+	void Trait::MoveEnd(Focal* focal, const double distance) const
+	{
+		focal->end_ = DecimalToUnitTicks(UnitTicksToDecimal(focal->end_) + distance);
+		focal->ClampToTrait();
+	}
+	void Trait::Scale(Focal* focal, double scale) const
+	{
+		ScaleStart(focal, scale); ScaleEnd(focal, scale);
+		focal->ClampToTrait();
+	}
+	void Trait::ScaleStart(Focal* focal, double scale) const
+	{
+		focal->start_ = DecimalToUnotTicks(UnotTicksToDecimal(focal->start_) * scale);
+		focal->ClampToTrait();
+	}
+	void Trait::ScaleEnd(Focal* focal, double scale) const
+	{
+		focal->end_ = DecimalToUnitTicks(UnitTicksToDecimal(focal->end_) * scale);
+		focal->ClampToTrait();
+	}
+
+
+	void Trait::SwapValues(Focal* focal)
+	{
+		const auto temp = focal->start_;
 		focal->start_ = focal->end_;
 		focal->end_ = temp;
+		focal->ClampToTrait();
 	}
 }

@@ -7,10 +7,13 @@
 
 namespace umath
 {
-	enum Pointing { LEFT, EQUAL, RIGHT };
+	enum class Pointing { LEFT, EQUAL, RIGHT };
 	
 	class Range
 	{
+	private:
+		inline LL Low() const { return start_ <= end_ ? start_ : end_; }
+		inline LL High() const { return start_ >= end_ ? start_ : end_; }
 	public:
 		LL start_;
 		LL end_;
@@ -21,6 +24,8 @@ namespace umath
 		Pointing Direction() const { return start_ < end_ ? Pointing::RIGHT : start_ > end_ ? Pointing::LEFT : Pointing::EQUAL; }
 		LL Length() const { return end_ - start_; }
 		LL AbsLength() const { return abs(end_ - start_); }
+		inline LL Clamp(const LL value) const { return value < Low() ? Low() : value > High() ? High() : value; }
+		inline void Clamp(Range &other) const { other.start_ = Clamp(other.start_); other.end_ = Clamp(other.end_); }
 
 		
 		friend std::ostream& operator<<(std::ostream& out_stream, Range const& seg) {
