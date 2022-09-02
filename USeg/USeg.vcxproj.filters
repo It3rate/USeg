@@ -30,6 +30,21 @@
     <ClInclude Include="src\Range.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\working\Selection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\working\Operation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\working\History.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\working\Equation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\working\Sequencer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -45,6 +60,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Range.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\working\Selection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\working\Operation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\working\History.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\working\Equation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\working\Sequencer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

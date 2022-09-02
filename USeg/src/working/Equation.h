@@ -2,5 +2,8 @@
 
 namespace umath
 {
-	using LL = long long int;
+	class Equation
+	{
+	};
+
 }
