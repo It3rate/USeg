@@ -20,12 +20,13 @@ namespace umath
 
 	void Trait::ValidateTrait() const
 	{
-		assert(("Unot must not point right: ", unot_->Direction() != Pointing::RIGHT));
-		assert(("Unot range must not point right: ", unot_range_->Direction() != Pointing::RIGHT));
-		assert(("Unit must not point left: ", unit_->Direction() != Pointing::LEFT));
-		assert(("Unit range must not point left: ", unit_range_->Direction() != Pointing::LEFT));
+		assert(("Unot must not point right: ", unot_->Direction() != Pointing::Right));
+		assert(("Unot range must not point right: ", unot_range_->Direction() != Pointing::Right));
+		assert(("Unit must not point left: ", unit_->Direction() != Pointing::Left));
+		assert(("Unit range must not point left: ", unit_range_->Direction() != Pointing::Left));
 	}
 
+	// Q. Where to put turn and twist? On trait, on endpoints of focals, or on a Path (may contain multiple potentially branched traits).
 	Focal* Trait::AddFocal(LL start, LL end)
 	{
 		const int id = focalCounter_++;

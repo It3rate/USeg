@@ -7,7 +7,7 @@
 
 namespace umath
 {
-	enum class Pointing { LEFT, EQUAL, RIGHT };
+	enum class Pointing { Left, Equal, Right };
 	
 	class Range
 	{
@@ -21,7 +21,7 @@ namespace umath
 		Range(LL start, LL end);
 		Range(LL end);
 
-		Pointing Direction() const { return start_ < end_ ? Pointing::RIGHT : start_ > end_ ? Pointing::LEFT : Pointing::EQUAL; }
+		Pointing Direction() const { return start_ < end_ ? Pointing::Right : start_ > end_ ? Pointing::Left : Pointing::Equal; }
 		LL Length() const { return end_ - start_; }
 		LL AbsLength() const { return abs(end_ - start_); }
 		inline LL Clamp(const LL value) const { return value < Low() ? Low() : value > High() ? High() : value; }

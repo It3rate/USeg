@@ -12,11 +12,14 @@ namespace umath
 {
 	class Range;
 
-	class Trait : public std::enable_shared_from_this<Trait>
+	class Trait 
 	{
 	private:
 		friend Focal;
 		inline static int  focalCounter_ = 1;
+		
+		// * maybe these should be in a vector, accommodate rare deletes and inserts by adjusting vector.
+		// * or focals are the hash key, and all collections are stored on traits.
 		std::unordered_map<int, std::unique_ptr<Focal>> focalMap_;
 		
 		// unot always points positive left on a trait line. Unot one will be less than unot zero for a positive unot.
