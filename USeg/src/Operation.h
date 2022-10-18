@@ -12,6 +12,16 @@ namespace umath
 	class Operation
 	{
 		// **** All ops, history, sequences, equations should fit on traits as focals.
+
+		// ** All operations can be reduced to one or more proportional moves, maybe (select what point(s) move relative to what, for what lengths and repeats)
+		// **        operations can be reduced to equations using only select>move primitives where amounts are recorded in segments as well.
+		//   - fixed: elements remain at some proportional position regardless of other changes. (used in branches and joins).
+		//   - shifts: points move together (non proportionately) to a proportional unit distance (this can just be two points doing multiplication)
+		//   - addition: end proportional to beginning
+		//   - multiplication: multiple points move proportionately  (by some 'additive' unit amount)
+		//   - complex math: whole number line also moves proportionately
+		//   - powers: repeating addition (becomes form of multiplication) or multiplication proportional moves, output becomes input.
+		//   - turns: proportional move balances between two unit segments.
 		
 		// Operations on selection(s)
 		// Select (can add segments)

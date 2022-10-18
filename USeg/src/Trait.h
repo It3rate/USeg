@@ -7,6 +7,7 @@
 #include "Globals.h"
 #include "Focal.h"
 #include "Range.h"
+#include "Domain.h"
 
 namespace umath 
 {
@@ -17,15 +18,18 @@ namespace umath
 	private:
 		friend Focal;
 		inline static int  focalCounter_ = 1;
+		inline static int  domainCounter_ = 1;
 		
 		// * maybe these should be in a vector, accommodate rare deletes and inserts by adjusting vector.
 		// * or focals are the hash key, and all collections are stored on traits.
 		std::unordered_map<int, std::unique_ptr<Focal>> focalMap_;
+		std::unordered_map<int, std::unique_ptr<Focal>> domainMap_;
 		
 		// unot always points positive left on a trait line. Unot one will be less than unot zero for a positive unot.
-		Focal *unot_;
+		Domain* defaultDomain_;
+		Focal* unot_;
 		Focal* unot_range_;
-		Focal *unit_;
+		Focal* unit_;
 		Focal* unit_range_;
 
 		Focal* AddFocal(Range& range);
@@ -50,6 +54,8 @@ namespace umath
 		inline void ScaleUnot(const double scale) const { unot_->end_ = UnotZeroTicks() + ScaleTicks(TicksPerUnot(), scale); }
 		inline void MoveUnit(const LL distance) const { unit_->start_ += distance; unit_->end_ += distance; }
 		inline void ScaleUnit(const double scale) const { unit_->end_ = UnitZeroTicks() + ScaleTicks(TicksPerUnit(), scale	); }
+		
+		static inline LL ScaleTicks(const LL ticks, const double scale) { return static_cast<LL>(scale * static_cast<double>(ticks)); }
 
 	public:
 		Trait(Range& unot, Range& unit, Range& unotRange, Range& unitRange);
@@ -60,6 +66,9 @@ namespace umath
 		 */
 		explicit Trait(const LL ticks_per_unit, const LL positive_extent);
 
+		//inline Focal& Unit() const { return *unit_; }
+		//inline Focal& Unot() const { return *unot_; }
+		
 		//void Value(const Focal* focal);
 		void SetValue(Focal* focal, const std::complex<double> value) const;
 		std::complex<double> Value(const Focal* focal) const;
@@ -80,7 +89,6 @@ namespace umath
 		Focal* AddFocalByValue(const double i_start, const double r_end);
 		Focal* AddFocalByValue(const std::complex<double> complex);
 
-		static inline LL ScaleTicks(const LL ticks, const double scale) { return static_cast<LL>(scale * static_cast<double>(ticks)); }
 	};
 	static const unsigned int UNKNOWN_TRAIT = 0;
 }

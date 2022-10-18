@@ -9,6 +9,9 @@ namespace umath
 {
 	enum class Pointing { Left, Equal, Right };
 	
+	/*
+	 * A generic segment with a start and end. Will point in a direction, but has no trait or unit. Base class for Focals, which specify a trait.
+	 */
 	class Range
 	{
 	private:

@@ -11,6 +11,9 @@ namespace umath
 {
 	class Trait;
 
+	/*
+	 * A segment on a trait. Has a start and end, and can only use the trait's default units if asked for a value. A true Number specifies it's unit and unot.
+	 */
 	class Focal : public Range
 	{
 	private:

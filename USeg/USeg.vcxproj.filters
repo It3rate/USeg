@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Operators">
+      <UniqueIdentifier>{8b1422e9-db37-444d-8b55-bafd0280e457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Operators">
+      <UniqueIdentifier>{f3bdb014-6593-46b8-b1ec-fa418ba55fcc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Trait.h">
@@ -45,6 +51,15 @@
     <ClInclude Include="src\Sequencer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Number.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Operator.h">
+      <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Domain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -75,6 +90,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Sequencer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Number.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Operator.cpp">
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Domain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

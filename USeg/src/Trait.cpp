@@ -32,7 +32,7 @@ namespace umath
 		const int id = focalCounter_++;
 		focalMap_.try_emplace(id, std::make_unique<Focal> (start, end, *this));
 		auto* const result = focalMap_.at(id).get();
-		result->ClampToTrait();
+		//result->ClampToTrait();
 		return result;
 	}
 

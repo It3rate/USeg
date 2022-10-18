@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Domain.h" />
+    <ClInclude Include="src\Operator.h" />
+    <ClInclude Include="src\Number.h" />
     <ClInclude Include="src\Sequencer.h" />
     <ClInclude Include="src\Equation.h" />
     <ClInclude Include="src\History.h" />
@@ -163,6 +166,9 @@
     <ClInclude Include="src\Trait.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Domain.cpp" />
+    <ClCompile Include="src\Operator.cpp" />
+    <ClCompile Include="src\Number.cpp" />
     <ClCompile Include="src\Sequencer.cpp" />
     <ClCompile Include="src\Equation.cpp" />
     <ClCompile Include="src\History.cpp" />
